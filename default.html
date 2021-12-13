@@ -1,0 +1,1765 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+	<meta name="keywords" content="서울여자대학교 2020년 온라인 직무박람회 JOB談(잡담)" />
+	<meta name="description" content="서울여자대학교 2020년 온라인 직무박람회 JOB談(잡담), 희망을 전하는 취업포털 커리어 www.career.co.kr" />
+	<meta name="author" content="커리어" />
+	<meta name="Copyright" content="희망을 전하는 취업 포털 커리어" />
+	<title>서울여자대학교 2020년 온라인 직무박람회 JOB談(잡담)</title>
+
+	<link rel="shortcut icon" href="/favicon.ico" />
+	<link rel="stylesheet" type="text/css" href="css/reset.css?20201017" />
+	<link rel="stylesheet" type="text/css" href="css/jquery-ui.css?20201017" />
+	<link rel="stylesheet" type="text/css" href="css/common.css?20201017" />
+	<link rel="stylesheet" type="text/css" href="css/popup.css?20201017" />
+	<link rel="stylesheet" type="text/css" href="/css/sm_sub.css?20201017" />
+
+	<script type="text/javascript" src="js/jquery-1.12.4.min.js?20201017"></script>
+	<script type="text/javascript" src="js/jquery-ui.js?20201017"></script>
+	<script type="text/javascript" src="js/ui.js?20201017"></script>
+	<script type="text/javascript" src="js/placeholders.min.js?20201017"></script>
+
+	<script type="text/javascript" src="js/comm_2009.js?20201017"></script>
+	<script type="text/javascript" src="js/common2.js?20201017"></script>
+	<script type="text/javascript" src="js/validateCommon.js?20201017"></script>
+
+	
+	
+
+
+
+<script type="text/javascript">
+	/*
+	jQuery(window).load(function() {
+		//GNB 메뉴 활성화
+		var g_menu_navi = '';
+		if (g_menu_navi != '') {
+			var navi_top = g_menu_navi.split(',')[0];
+			var navi_sub = g_menu_navi.split(',')[1];
+			$('.gnb .parent .m'+navi_top+' .mbtn').addClass('on');
+		}
+	});
+	*/
+</script>
+
+<link rel="stylesheet" type="text/css" href="css/sm_main.css?20201017" />
+<script type="text/javascript">
+
+	$(document).ready(function() {
+		$('#mentor_area_1').show();
+		$(".date_area li button").eq(0).addClass("on");
+
+		$('#lecture_area_1').show();
+		$('#lcture_area_1').show();
+	});
+
+	//멘토링 정보 날짜클릭 검색
+	function fn_mentor_area_show(_val) {
+		$('#mentor_area_1').hide();
+		$('#mentor_area_2').hide();
+		$('#mentor_area_3').hide();
+		$('#mentor_area_4').hide();
+		$('#mentor_area_5').hide();
+
+		$('#mentor_area_' + _val).show();
+
+
+		$('#lcture_area_1').hide();
+		$('#lcture_area_2').hide();
+		$('#lcture_area_3').hide();
+		$('#lcture_area_4').hide();
+		$('#lcture_area_5').hide();
+
+		$('#lcture_area_' + _val).show();
+	}
+
+	//팝업 
+	function view_layer(num) {
+		var popUp = $("#pop" + num);
+		popUp.show().find(".dim").show();
+	}
+	function view_layer_hide(num){
+		var popUp = $("#pop" + num);
+		popUp.show().hide(".dim").hide();
+	}
+
+	//로그인
+	function fn_login() {
+		alert("개인 로그인 후 신청이 가능합니다.");
+		location.href = '/my/login.asp';
+	}
+	
+	//온라인 AI 화상면접 신청
+	function fn_ai_apply() {
+		var loginChk = "0";
+		if (loginChk != "1") {
+			fn_login();
+			return;
+		}
+
+		if (confirm("온라인 AI화상면접에 신청하시겠습니까?")) {
+			$.ajax({
+				url: "/inc/proc_ai_apply_insert.asp",
+				type: "POST",
+				dataType: "html",
+				data: ({
+
+				}),
+				success: function (data) {
+					if (data == "1") {
+						alert("신청이 되었으며, 선착순으로 진행되므로 최종 승인여부는 개별 문자로 안내됩니다.");
+					} else if (data == "2") {
+						alert("이미 신청하였습니다.");
+					} else if (data == "3") {
+						alert("신청 정원이 초과되었습니다.");
+					}
+				},
+				error: function (req, status, err) {
+					alert("처리 도중 오류가 발생하였습니다.\n" + err);
+				}
+			});
+		}
+
+	}
+
+	//오프닝 및 특강 신청
+	function fn_lecture_apply(_val) {
+		var loginChk = "0";
+		if (loginChk != "1") {
+			fn_login();
+			return;
+		}
+
+		if (confirm("특강에 신청하시겠습니까?")) {
+			$.ajax({
+				url: "/inc/proc_lecture_insert.asp",
+				type: "POST",
+				dataType: "html",
+				data: ({
+					"apply_type": _val
+				}),
+				success: function (data) {
+
+					if (data == "1") {
+						alert("신청하였습니다.");
+					} else if (data == "2") {
+						alert("이미 신청하였습니다.");
+					}
+
+				},
+				error: function (req, status, err) {
+					alert("처리 도중 오류가 발생하였습니다.\n" + err);
+				}
+			});
+		}
+	}
+
+	//공지사항 팝업 리스트
+	function fn_board_view_pop(_val) {
+		var _page = _val;
+		if (_page == "") {
+			_page = "1"
+		}
+		
+		$.ajax({
+			url: "/inc/main_board.asp",
+			type: "POST",
+			dataType: "html",
+			data: ({
+				"kw": 1,
+				"sGubun": 2,
+				"idx": 0,
+				"page": _page,
+			}),
+			success: function (data) {
+				$('#pop_area_board').html(data);
+			},
+			error: function (req, status, err) {
+				alert("처리 도중 오류가 발생하였습니다.\n" + err);
+			}
+		});
+	}
+
+	//공지사항 팝업 상세뷰
+	function fn_board_dtl_view_pop(_val) {
+		$.ajax({
+			url: "/inc/main_board_dtl.asp",
+			type: "POST",
+			dataType: "html",
+			data: ({
+				"board_no": _val,
+			}),
+			success: function (data) {
+				$('#pop_area_board').html(data);
+			},
+			error: function (req, status, err) {
+				alert("처리 도중 오류가 발생하였습니다.\n" + err);
+			}
+		});
+	}
+
+	//동문특강 신청
+	function fn_lcture_apply2() {
+		var loginChk = "0";
+		if (loginChk != "1") {
+			fn_login();
+			return;
+		}
+
+		$.ajax({
+			url: "./ajax_eclass_apply.asp",
+			type: "POST",
+			dataType: "html",
+			data: ({
+			}),
+			success: function (data) {
+				window.open("https://cyber.swu.ac.kr/ilos/ad/eclass_open2_update_form.acl?SCH_YEAR=2020&SCH_TERM=&SCH_SUBJT_NM=&SCH_PROF_NM=&SCH_OPEN_YN=&SCH_LECT_TYPE=&SCH_CAMPUS=&SCH_CONTENTS_YN=&SCH_ORG_SECT=&ODR_NO=&display=15&start=1&KJKEY=%EB%B9%842020BCAREER01&ORG_SECT=%EB%B9%84&LEDG_YEAR=2020&LEDG_TERM=B&LSSN_CD=CAREER&SUBJT_NO=01");
+			},
+			error: function (req, status, err) {
+				alert("처리 도중 오류가 발생하였습니다.\n" + err);
+			}
+		});
+	}
+
+</script>
+</head>
+<body>
+
+
+
+
+<!-- Skipnavi -->
+<div id="skipnavi">
+	<a href="#header-id">상단 바로가기</a>
+	<a href="#contents-id">본문 바로가기</a>
+	<a href="#footer-id">하단 바로가기</a>
+</div>
+<!-- // Skipnavi -->
+
+<!-- 상단 header -->
+<div id="header">
+	<div class="header_area">
+		<div class="logo-area">
+			<h1>
+				<a href="default.html"><img src="images/logo.png" alt="국가보훈처 logo"></a>
+			</h1>
+		</div><!-- .logo-area -->
+		
+		
+		<div class="info_box">
+			<ul>
+				<li><a href="my/login.html">개인 로그인</a></li>
+				<li><a href="admin/login.html">관리자 로그인</a></li>
+				<li><a href="my/join.html">회원가입</a></li>
+			</ul>
+		</div>
+
+		
+
+	</div>
+</div><!-- //header -->
+<!-- //상단 header -->
+
+
+<!-- 본문 -->
+<div id="contents" class="main">
+	<div class="visual_area">
+		<div class="visual_box">
+			<img src="images/visual_txt.png" alt="2020 언택트 보훈 JOB FESTIVAL 단 5일간, 2020/09/07(월) ~ 2020/09/11(금)">
+		</div>
+	</div><!-- .visual_area -->
+
+	<!-- rnb -->
+
+	<div id="rnb">
+		<div class="rnb_area">
+			<div class="rnb_box">
+				<div class="line_box">
+					<a href="javascript:" onclick="fn_lcture_apply2();">
+						<img src="images/banner_img4.jpg" alt="동문">
+					</a>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<script>
+	$( document ).ready( function() {
+		var ctOffset = $( '#rnb' ).offset();
+		$( window ).scroll( function() {
+			if ( $( document ).scrollTop() > ctOffset.top ) {
+				$( '.rnb_box' ).addClass( 'rb_fixed' );
+			}
+			else {
+				$( '.rnb_box' ).removeClass( 'rb_fixed' );
+			}
+		});
+
+		$(".rnb_top").click(function() {
+			$('html, body').animate({
+				scrollTop : 0
+			}, 400);
+			return false;
+		});
+	});
+	</script>
+	<!-- rnb -->
+
+
+	<div class="content">
+		<div class="content_area">
+			<div class="sec_area">
+
+				<div class="notice_box">
+					<p class="tit">공지사항</p>
+					<ul>
+						
+						<li>
+							<a class="pop" href="#pop1" onclick="fn_board_dtl_view_pop(9)">
+								<p>선물이 쏟아지는 직무박람회 이벤트</p>
+								<span>2020-11-06</span>
+							</a>
+						</li>
+						
+						<li>
+							<a class="pop" href="#pop1" onclick="fn_board_dtl_view_pop(8)">
+								<p>2020년  온라인직무박람회   전체일정표</p>
+								<span>2020-11-06</span>
+							</a>
+						</li>
+						
+						<li>
+							<a class="pop" href="#pop1" onclick="fn_board_dtl_view_pop(7)">
+								<p>동문특강(서울여대 e-class)  수강 방법</p>
+								<span>2020-11-04</span>
+							</a>
+						</li>
+						
+					</ul>
+					<a href="#pop1" class="more pop" onclick="fn_board_view_pop(1)">더보기</a>
+				</div><!--notice_box -->
+
+
+				<div class="banner_box">
+					
+					<a href="https://inface.ai/jobswu/intro" target="_blank;" onclick="/* fnMove('1') */">
+						<img src="images/banner_img1.jpg" alt="AI면접 역량검사">
+					</a>
+					<script>
+					/*
+						function fnMove(seq){
+							var offset = $("#div_date_area").offset();
+							$('html, body').animate({scrollTop : offset.top}, 400);
+						}
+					*/
+					</script>
+					<a href="javascript:" class="more" onclick="fn_board_dtl_view_pop(9)">
+						<img src="images/banner_img2.jpg" alt="박람회 OPEN 이벤트 지금 바로 참여하기!">
+					</a>
+
+					<a href="https://zoom.us/support/download" target="_blank;">
+						<img src="images/banner_img3.jpg" alt="온라인 AI화상면접 신청하기">
+					</a>
+					
+				</div>
+
+			</div>
+
+			<!-- 특강 -->
+			
+
+<script type="text/javascript">
+	//오프닝 및 특강 신청
+	function fn_lcture_apply(_val) {
+		var loginChk = "0";
+		if (loginChk != "1") {
+			fn_login();
+			return;
+		}
+
+		if (confirm("특강에 신청하시겠습니까?")) {
+			$.ajax({
+				url: "/inc/proc_lecture_insert.asp",
+				type: "POST",
+				dataType: "html",
+				data: ({
+					"apply_type": _val
+				}),
+				success: function (data) {
+					
+					if (data == "1") {
+						alert("특강 신청이 완료되었습니다.");
+						location.href = "/my/default.asp";
+					} else if (data == "2") {
+						alert("이미 신청하였습니다.");
+					}
+
+				},
+				error: function (req, status, err) {
+					alert("처리 도중 오류가 발생하였습니다.\n" + err);
+				}
+			});
+		}
+	}
+</script>
+
+<div class="date_area" id="div_date_area">
+	<ul>
+		
+		<li><button type="button" onclick="fn_mentor_area_show(1)">11/09 (월)</button></li>
+		
+		<li><button type="button" onclick="fn_mentor_area_show(2)">11/10 (화)</button></li>
+		
+		<li><button type="button" onclick="fn_mentor_area_show(3)">11/11 (수)</button></li>
+		
+		<li><button type="button" onclick="fn_mentor_area_show(4)">11/12 (목)</button></li>
+		
+		<li><button type="button" onclick="fn_mentor_area_show(5)">11/13 (금)</button></li>
+		
+	</ul>
+</div>
+
+<script>
+	$(".date_area li button").click(function() {
+		$(".date_area button").removeClass("on");
+		$(this).addClass("on"); 
+		return false;
+	});
+</script>
+
+<div class="content">
+	<div class="content_area">
+		<div class="special_area">
+			<h5 class="tit">취.창업특강</h5>
+			
+			
+			<div id="lcture_area_1" style="display:none;">
+				
+				<dl class="spe_dl">
+					<dt>취업에 성공하는 면접  준비 전략(권성일 강사)</dt>
+					<dd>
+						2020-11-09&nbsp;&nbsp;10:00&nbsp;~&nbsp;2021-11-09&nbsp;&nbsp;12:00
+						<div class="btn_area">
+							
+							<a href="javascript:alert('특강이 종료되었습니다.');" class="btn end">취업특강 종료</a>
+							
+						</div>
+					</dd>
+				</dl>
+				
+				<dl class="spe_dl">
+					<dt>프리랜서로 살아남기(유튜버 메이커 다은쌤 전다은)</dt>
+					<dd>
+						2020-11-09&nbsp;&nbsp;15:00&nbsp;~&nbsp;2020-11-09&nbsp;&nbsp;17:00
+						<div class="btn_area">
+							
+							<a href="javascript:alert('특강이 종료되었습니다.');" class="btn end">창업특강 종료</a>
+							
+						</div>
+					</dd>
+				</dl>
+				
+			</div>
+			
+			<div id="lcture_area_2" style="display:none;">
+				
+				<dl class="spe_dl">
+					<dt>취업에 성공하는 면접  준비 전략(권성일 강사)</dt>
+					<dd>
+						2020-11-09&nbsp;&nbsp;10:00&nbsp;~&nbsp;2021-11-09&nbsp;&nbsp;12:00
+						<div class="btn_area">
+							
+							<a href="javascript:alert('특강이 종료되었습니다.');" class="btn end">취업특강 종료</a>
+							
+						</div>
+					</dd>
+				</dl>
+				
+				<dl class="spe_dl">
+					<dt>취업에 성공하는 자기소개서 특강 (강원준 강사)</dt>
+					<dd>
+						2020-11-10&nbsp;&nbsp;10:00&nbsp;~&nbsp;2020-11-10&nbsp;&nbsp;12:00
+						<div class="btn_area">
+							
+							<a href="javascript:alert('특강이 종료되었습니다.');" class="btn end">취업특강 종료</a>
+							
+						</div>
+					</dd>
+				</dl>
+				
+				<dl class="spe_dl">
+					<dt>디자인부터 제조까지, 제조업 창업의 모든 것      (스윗유 허하나 대표)</dt>
+					<dd>
+						2020-11-10&nbsp;&nbsp;15:00&nbsp;~&nbsp;2020-11-10&nbsp;&nbsp;17:00
+						<div class="btn_area">
+							
+							<a href="javascript:alert('특강이 종료되었습니다.');" class="btn end">창업특강 종료</a>
+							
+						</div>
+					</dd>
+				</dl>
+				
+			</div>
+			
+			<div id="lcture_area_3" style="display:none;">
+				
+				<dl class="spe_dl">
+					<dt>취업에 성공하는 면접  준비 전략(권성일 강사)</dt>
+					<dd>
+						2020-11-09&nbsp;&nbsp;10:00&nbsp;~&nbsp;2021-11-09&nbsp;&nbsp;12:00
+						<div class="btn_area">
+							
+							<a href="javascript:alert('특강이 종료되었습니다.');" class="btn end">취업특강 종료</a>
+							
+						</div>
+					</dd>
+				</dl>
+				
+				<dl class="spe_dl">
+					<dt>취업 안 하고 밥 벌어먹기(프리랜서와 유튜버 이야기)  크리에이터 최세화 동문</dt>
+					<dd>
+						2020-11-11&nbsp;&nbsp;10:00&nbsp;~&nbsp;2020-11-11&nbsp;&nbsp;12:00
+						<div class="btn_area">
+							
+							<a href="javascript:alert('특강이 종료되었습니다.');" class="btn end">취업특강 종료</a>
+							
+						</div>
+					</dd>
+				</dl>
+				
+				<dl class="spe_dl">
+					<dt>지식 재산권을 활용하여 취창업하기(이룸리온 김윤선 변리사)</dt>
+					<dd>
+						2020-11-11&nbsp;&nbsp;15:00&nbsp;~&nbsp;2020-11-11&nbsp;&nbsp;17:00
+						<div class="btn_area">
+							
+							<a href="javascript:alert('특강이 종료되었습니다.');" class="btn end">창업특강 종료</a>
+							
+						</div>
+					</dd>
+				</dl>
+				
+			</div>
+			
+			<div id="lcture_area_4" style="display:none;">
+				
+				<dl class="spe_dl">
+					<dt>취업에 성공하는 면접  준비 전략(권성일 강사)</dt>
+					<dd>
+						2020-11-09&nbsp;&nbsp;10:00&nbsp;~&nbsp;2021-11-09&nbsp;&nbsp;12:00
+						<div class="btn_area">
+							
+							<a href="javascript:alert('특강이 종료되었습니다.');" class="btn end">취업특강 종료</a>
+							
+						</div>
+					</dd>
+				</dl>
+				
+				<dl class="spe_dl">
+					<dt>공공기관 취업전략(박규현 강사)</dt>
+					<dd>
+						2020-11-12&nbsp;&nbsp;10:00&nbsp;~&nbsp;2020-11-12&nbsp;&nbsp;12:00
+						<div class="btn_area">
+							
+							<a href="javascript:alert('특강이 종료되었습니다.');" class="btn end">취업특강 종료</a>
+							
+						</div>
+					</dd>
+				</dl>
+				
+			</div>
+			
+			<div id="lcture_area_5" style="display:none;">
+				
+				<dl class="spe_dl">
+					<dt>취업에 성공하는 면접  준비 전략(권성일 강사)</dt>
+					<dd>
+						2020-11-09&nbsp;&nbsp;10:00&nbsp;~&nbsp;2021-11-09&nbsp;&nbsp;12:00
+						<div class="btn_area">
+							
+							<a href="javascript:alert('특강이 종료되었습니다.');" class="btn end">취업특강 종료</a>
+							
+						</div>
+					</dd>
+				</dl>
+				
+				<dl class="spe_dl">
+					<dt>해외취업 어떻게 준비해야할까?(백티스  시몽뷔로 대표)</dt>
+					<dd>
+						2020-11-13&nbsp;&nbsp;10:00&nbsp;~&nbsp;2020-11-13&nbsp;&nbsp;12:00
+						<div class="btn_area">
+							
+							<a href="javascript:alert('특강이 종료되었습니다.');" class="btn end">취업특강 종료</a>
+							
+						</div>
+					</dd>
+				</dl>
+				
+			</div>
+			
+
+		</div><!--/.special_area -->
+	</div>
+</div><!-- .content -->
+			
+			<!-- 직무상담 -->
+			
+
+<script type="text/javascript">
+
+	//멘토링신청 유의사항
+	function fn_note_info_view_pop(_val) {
+		$('#set_mentor_no').val(_val);
+	}
+
+	//멘토링 입장
+	function fn_note_info_view_pop_link(_val) {
+		$('input:checkbox[id="agree_chk2"]').attr("checked", false);
+		checkboxFnc();
+
+		$('#mentor_url').val(_val);
+	}
+
+	//유의사항 확인
+	function fn_note_info_view_pop_apply() {
+		if ($("#agree_chk2").is(":checked") == false) {
+			alert("유의사항 동의 체크를 해주세요.");
+			return;
+		}
+		
+		view_layer_hide(5);
+
+		var link = $('#mentor_url').val();
+		window.open(link);
+	}
+
+
+
+	//상담 신청
+	function fn_apply() {
+		
+		if (!confirm("현직자 특강&상담을 신청하시겠습니까?")) {
+			return;
+		}
+
+		var _val = $('#set_mentor_no').val();
+		/*
+		var _time = "";
+		$('input:radio[name="apply_time"]').each(function() {
+			if(this.checked) {//checked 처리된 항목의 값
+				_time = this.value;
+			}
+		});
+		*/
+		var _cont = $('#quest_cont').val();
+
+		$.ajax({
+			url: "/inc/proc_apply_insert.asp",
+			type: "POST",
+			dataType: "html",
+			data: ({
+				"mentor_no": _val,
+				"quest_cont": escape(_cont)
+			}),
+			success: function (data) {
+				if (data >= 1) {
+					view_layer_hide(4);
+					view_layer(5);
+					fn_apply_result_view_pop(_val);
+				} else {
+					alert("처리 도중 오류가 발생하였습니다.");
+				}
+			},
+			error: function (req, status, err) {
+				alert("처리 도중 오류가 발생하였습니다.\n" + err);
+				return false;
+			}
+		});
+	}
+
+	function fn_apply_new(_val) {
+
+		$.ajax({
+			url: "/inc/proc_apply_insert_new.asp",
+			type: "POST",
+			dataType: "html",
+			data: ({
+				"mentor_no": _val
+			}),
+			success: function (data) {
+				if (data >= 1) {
+					if (!confirm("현직자 특강&상담 신청이 완료되었습니다.\n사전질문을 등록하시겠습니까?")) {
+						view_layer(5);
+						fn_apply_result_view_pop(_val);
+					}
+					else {
+						view_layer(4);
+						fn_question_save_new(_val);
+					}
+				} else {
+					alert("처리 도중 오류가 발생하였습니다.");
+				}
+			},
+			error: function (req, status, err) {
+				alert("처리 도중 오류가 발생하였습니다.\n" + err);
+				return false;
+			}
+		});
+
+	}
+
+	//멘토링 신청 팝업
+	function fn_apply_view_pop(_val) {
+		//선택한 멘토no 을 가지고있기 위함
+		$('#set_mentor_no').val(_val);
+
+		$.ajax({
+			url: "/inc/main_pop_apply.asp",
+			type: "POST",
+			dataType: "html",
+			data: ({
+				"mentor_no": _val,
+			}),
+			success: function (data) {
+				$('#pop_area_apply').html(data);
+				radioboxFnc(); //라디오박스
+			},
+			error: function (req, status, err) {
+				alert("처리 도중 오류가 발생하였습니다.\n" + err);
+			}
+		});
+	}
+	
+	//사전질문 등록하러 가기
+	function fn_question_save(_val) {
+
+		//선택한 멘토no 을 가지고있기 위함
+		$('#set_mentor_no').val(_val);
+		
+		/*
+		var chk_val = "";
+		$('input:radio[name="apply_time"]').each(function() {
+			if(this.checked) {//checked 처리된 항목의 값
+				chk_val = this.value;
+			}
+		});
+
+		if (chk_val == "") {
+			alert('시간을 선택해 주세요.');
+			return;
+		}
+		*/
+
+		view_layer_hide('3');
+		view_layer('4');
+		fn_question_save_view_pop(_val);
+
+	}
+
+	function fn_question_save_new(_val) {
+
+		//선택한 멘토no 을 가지고있기 위함
+		$('#set_mentor_no').val(_val);
+
+		view_layer('4');
+		fn_question_save_view_pop_new(_val);
+
+	}
+
+	function fn_question_save_view_pop(_val) {
+		//선택한 멘토no 을 가지고있기 위함
+		$('#set_mentor_no').val(_val);
+		
+		/*
+		var chk_val = "";
+		$('input:radio[name="apply_time"]').each(function() {
+			if(this.checked) {//checked 처리된 항목의 값
+				chk_val = this.value;
+			}
+		});
+		*/
+
+		$.ajax({
+			url: "/inc/main_pop_question_reg.asp",
+			type: "POST",
+			dataType: "html",
+			data: ({
+				"mentor_no": _val
+			}),
+			success: function (data) {
+				$('#pop_area_question').html(data);
+			},
+			error: function (req, status, err) {
+				alert("처리 도중 오류가 발생하였습니다.\n" + err);
+			}
+		});
+	}
+
+	function fn_question_save_view_pop_new(_val) {
+		//선택한 멘토no 을 가지고있기 위함
+		$('#set_mentor_no').val(_val);
+
+		$.ajax({
+			url: "/inc/main_pop_question_reg_new.asp",
+			type: "POST",
+			dataType: "html",
+			data: ({
+				"mentor_no": _val
+			}),
+			success: function (data) {
+				$('#pop_area_question').html(data);
+			},
+			error: function (req, status, err) {
+				alert("처리 도중 오류가 발생하였습니다.\n" + err);
+			}
+		});
+	}
+
+	function fn_quest_save() {
+		if ($('#quest_cont').val() == "") {
+			alert("질문내용을 입력해주세요");
+			return;
+		}
+
+		$('#frm_quest').attr('action', '/inc/proc_question_insert.asp');
+		$('#frm_quest').submit();
+	}
+
+	function fn_quest_save_new(_val) {
+		var _cont = $('#quest_cont').val();
+
+		if (_cont == "") {
+			alert("사전질문을 입력해 주시기 바랍니다.");
+			return;
+		}
+
+		$.ajax({
+			url: "/inc/proc_apply_insert.asp",
+			type: "POST",
+			dataType: "html",
+			data: ({
+				"mentor_no": _val,
+				"quest_cont": escape(_cont)
+			}),
+			success: function (data) {
+				if (data >= 1) {
+					view_layer_hide(4);
+					view_layer_hide('4_2');
+					view_layer(5);
+					fn_apply_result_view_pop(_val);
+				} else {
+					alert("처리 도중 오류가 발생하였습니다.");
+				}
+			},
+			error: function (req, status, err) {
+				alert("처리 도중 오류가 발생하였습니다.\n" + err);
+				return false;
+			}
+		});	
+	}
+
+	//멘토링 사전질문 리스트 팝업
+	function fn_quest_view_pop(_page) {
+		var _mentor_no = $('#set_mentor_no').val();
+
+		view_layer_hide(4);
+		view_layer('4_2');
+
+		$.ajax({
+			url: "/inc/main_pop_question_list.asp",
+			type: "POST",
+			dataType: "html",
+			data: ({
+				"page": _page,
+				"mentor_no": _mentor_no,
+			}),
+			success: function (data) {
+				$('#pop_area_question_list').html(data);
+			},
+			error: function (req, status, err) {
+				alert("처리 도중 오류가 발생하였습니다.\n" + err);
+			}
+		});
+	}
+
+	function fn_apply_result_view_pop(_val) {
+		//선택한 멘토no 을 가지고있기 위함
+		$('#set_mentor_no').val(_val);
+
+		$.ajax({
+			url: "/inc/main_pop_apply_result.asp",
+			type: "POST",
+			dataType: "html",
+			data: ({
+				"mentor_no": _val,
+			}),
+			success: function (data) {
+				$('#pop_area_apply_result').html(data);
+			},
+			error: function (req, status, err) {
+				alert("처리 도중 오류가 발생하였습니다.\n" + err);
+			}
+		});
+
+	}
+
+</script>
+
+<input type="hidden" id="set_mentor_no" value="">
+
+
+<div class="mentor_area" id="mentor_area_1" style="display:none;">
+	<h5 class="tit">현직자 특강 & 상담</h5>
+	<ul>
+		
+
+		<li>
+			<dl class="ma_info">
+				<dt><span>前)삼성전자(디자인)</span></dt>
+				<dd style="display:none;">前) 삼성전자</dd>
+				<dd>
+					<span>기업설명회<br>13:00~15:00</span>
+					
+					<!-- 신청기간 종료시 -->
+					
+					<a href="javascript:" class="btn deadline">신청종료</a>
+
+					<!-- 개인로그인 안했을시 -->
+					
+				</dd>
+
+				<dd>
+					<div class="ma_logo">
+						<div class="logo_box">
+							<div class="logo">
+								<img src="files/mentor/202011/2020110414045009630.JPG">
+							</div>
+						</div>
+					</div>
+				</dd>
+
+			</dl>
+		</li>
+		
+
+		<li>
+			<dl class="ma_info">
+				<dt><span>현대엠엔소프트(디자인) 동문</span></dt>
+				<dd style="display:none;">현대엠엔소프트</dd>
+				<dd>
+					<span>동문설명회<br>15:00~17:00</span>
+					
+					<!-- 신청기간 종료시 -->
+					
+					<a href="javascript:" class="btn deadline">신청종료</a>
+
+					<!-- 개인로그인 안했을시 -->
+					
+				</dd>
+
+				<dd>
+					<div class="ma_logo">
+						<div class="logo_box">
+							<div class="logo">
+								<img src="files/mentor/202011/2020110414093706608.JPG">
+							</div>
+						</div>
+					</div>
+				</dd>
+
+			</dl>
+		</li>
+		
+
+		<li>
+			<dl class="ma_info">
+				<dt><span>코레일(공기업)</span></dt>
+				<dd style="display:none;">코레일</dd>
+				<dd>
+					<span>기업설명회<br>17:00~19:00</span>
+					
+					<!-- 신청기간 종료시 -->
+					
+					<a href="javascript:" class="btn deadline">신청종료</a>
+
+					<!-- 개인로그인 안했을시 -->
+					
+				</dd>
+
+				<dd>
+					<div class="ma_logo">
+						<div class="logo_box">
+							<div class="logo">
+								<img src="files/mentor/202011/2020110414142302169.JPG">
+							</div>
+						</div>
+					</div>
+				</dd>
+
+			</dl>
+		</li>
+		
+		<li>
+			<dl class="ma_info elder">
+				<dt><span>선배에게 듣는 회사, 직무이야기</span></dt>
+				<dd>
+					동문특강(E-Class)<br><span><img src="images/elder_txt.png" alt="언니들이 돌아왔다."></span>
+					<a href="javascript:" class="btn apply" onclick="fn_lcture_apply2();">VOD 보러가기</a>
+				</dd>
+				<dd></dd>
+			</dl>
+		</li>
+	</ul>
+</div>
+
+
+
+<div class="mentor_area" id="mentor_area_2" style="display:none;">
+	<h5 class="tit">현직자 특강 & 상담</h5>
+	<ul>
+		
+
+		<li>
+			<dl class="ma_info">
+				<dt><span>한국마사회(공기업)</span></dt>
+				<dd style="display:none;">한국마사회</dd>
+				<dd>
+					<span>기업설명회<br>13:00~15:00</span>
+					
+					<!-- 신청기간 종료시 -->
+					
+					<a href="javascript:" class="btn deadline">신청종료</a>
+
+					<!-- 개인로그인 안했을시 -->
+					
+				</dd>
+
+				<dd>
+					<div class="ma_logo">
+						<div class="logo_box">
+							<div class="logo">
+								<img src="files/mentor/202011/2020110414054102650.JPG">
+							</div>
+						</div>
+					</div>
+				</dd>
+
+			</dl>
+		</li>
+		
+
+		<li>
+			<dl class="ma_info">
+				<dt><span>前)안진회계법인(회계사)</span></dt>
+				<dd style="display:none;">前)안진회계법인</dd>
+				<dd>
+					<span>기업설명회<br>17:00~19:00</span>
+					
+					<!-- 신청기간 종료시 -->
+					
+					<a href="javascript:" class="btn deadline">신청종료</a>
+
+					<!-- 개인로그인 안했을시 -->
+					
+				</dd>
+
+				<dd>
+					<div class="ma_logo">
+						<div class="logo_box">
+							<div class="logo">
+								<img src="files/mentor/202011/2020110414153200147.JPG">
+							</div>
+						</div>
+					</div>
+				</dd>
+
+			</dl>
+		</li>
+		
+
+		<li>
+			<dl class="ma_info">
+				<dt><span>이랜드(패션사업부 영업)동문</span></dt>
+				<dd style="display:none;">이랜드</dd>
+				<dd>
+					<span>동문설명회<br>15:00~17:00</span>
+					
+					<!-- 신청기간 종료시 -->
+					
+					<a href="javascript:" class="btn deadline">신청종료</a>
+
+					<!-- 개인로그인 안했을시 -->
+					
+				</dd>
+
+				<dd>
+					<div class="ma_logo">
+						<div class="logo_box">
+							<div class="logo">
+								<img src="files/mentor/202011/2020110414102007510.JPG">
+							</div>
+						</div>
+					</div>
+				</dd>
+
+			</dl>
+		</li>
+		
+		<li>
+			<dl class="ma_info elder">
+				<dt><span>선배에게 듣는 회사, 직무이야기</span></dt>
+				<dd>
+					동문특강(E-Class)<br><span><img src="images/elder_txt.png" alt="언니들이 돌아왔다."></span>
+					<a href="javascript:" class="btn apply" onclick="fn_lcture_apply2();">VOD 보러가기</a>
+				</dd>
+				<dd></dd>
+			</dl>
+		</li>
+	</ul>
+</div>
+
+
+
+<div class="mentor_area" id="mentor_area_3" style="display:none;">
+	<h5 class="tit">현직자 특강 & 상담</h5>
+	<ul>
+		
+
+		<li>
+			<dl class="ma_info">
+				<dt><span>IBM(개발)</span></dt>
+				<dd style="display:none;">IBM</dd>
+				<dd>
+					<span>기업설명회<br>13:00~15:00</span>
+					
+					<!-- 신청기간 종료시 -->
+					
+					<a href="javascript:" class="btn deadline">신청종료</a>
+
+					<!-- 개인로그인 안했을시 -->
+					
+				</dd>
+
+				<dd>
+					<div class="ma_logo">
+						<div class="logo_box">
+							<div class="logo">
+								<img src="files/mentor/202011/2020110414064505654.JPG">
+							</div>
+						</div>
+					</div>
+				</dd>
+
+			</dl>
+		</li>
+		
+
+		<li>
+			<dl class="ma_info">
+				<dt><span>홀트아동복지회(NGO) 사회복지학과 </span></dt>
+				<dd style="display:none;">홀트아동복지회</dd>
+				<dd>
+					<span>동문설명회<br>15:00~17:00</span>
+					
+					<!-- 신청기간 종료시 -->
+					
+					<a href="javascript:" class="btn deadline">신청종료</a>
+
+					<!-- 개인로그인 안했을시 -->
+					
+				</dd>
+
+				<dd>
+					<div class="ma_logo">
+						<div class="logo_box">
+							<div class="logo">
+								<img src="files/mentor/202011/2020110414240905207.JPG">
+							</div>
+						</div>
+					</div>
+				</dd>
+
+			</dl>
+		</li>
+		
+
+		<li>
+			<dl class="ma_info">
+				<dt><span>LG화학(기획/사업개발)/前 보령제약(해외영업)</span></dt>
+				<dd style="display:none;">LG화학</dd>
+				<dd>
+					<span>기업설명회<br>17:00~19:00</span>
+					
+					<!-- 신청기간 종료시 -->
+					
+					<a href="javascript:" class="btn deadline">신청종료</a>
+
+					<!-- 개인로그인 안했을시 -->
+					
+				</dd>
+
+				<dd>
+					<div class="ma_logo">
+						<div class="logo_box">
+							<div class="logo">
+								<img src="files/mentor/202011/2020110414162008616.JPG">
+							</div>
+						</div>
+					</div>
+				</dd>
+
+			</dl>
+		</li>
+		
+		<li>
+			<dl class="ma_info elder">
+				<dt><span>선배에게 듣는 회사, 직무이야기</span></dt>
+				<dd>
+					동문특강(E-Class)<br><span><img src="images/elder_txt.png" alt="언니들이 돌아왔다."></span>
+					<a href="javascript:" class="btn apply" onclick="fn_lcture_apply2();">VOD 보러가기</a>
+				</dd>
+				<dd></dd>
+			</dl>
+		</li>
+	</ul>
+</div>
+
+
+
+<div class="mentor_area" id="mentor_area_4" style="display:none;">
+	<h5 class="tit">현직자 특강 & 상담</h5>
+	<ul>
+		
+
+		<li>
+			<dl class="ma_info">
+				<dt><span>前)CJ 제일제당(인사)</span></dt>
+				<dd style="display:none;">前) CJ제일제당</dd>
+				<dd>
+					<span>기업설명회<br>13:00~15:00</span>
+					
+					<!-- 신청기간 종료시 -->
+					
+					<a href="javascript:" class="btn deadline">신청종료</a>
+
+					<!-- 개인로그인 안했을시 -->
+					
+				</dd>
+
+				<dd>
+					<div class="ma_logo">
+						<div class="logo_box">
+							<div class="logo">
+								<img src="files/mentor/202011/2020110414073200031.JPG">
+							</div>
+						</div>
+					</div>
+				</dd>
+
+			</dl>
+		</li>
+		
+
+		<li>
+			<dl class="ma_info">
+				<dt><span>삼성웰스토리(영양사)    식품영양전공</span></dt>
+				<dd style="display:none;">삼성웰스토리</dd>
+				<dd>
+					<span>동문설명회<br>15:00~17:00</span>
+					
+					<!-- 신청기간 종료시 -->
+					
+					<a href="javascript:" class="btn deadline">신청종료</a>
+
+					<!-- 개인로그인 안했을시 -->
+					
+				</dd>
+
+				<dd>
+					<div class="ma_logo">
+						<div class="logo_box">
+							<div class="logo">
+								<img src="files/mentor/202011/2020110414121008423.JPG">
+							</div>
+						</div>
+					</div>
+				</dd>
+
+			</dl>
+		</li>
+		
+		<li>
+			<dl class="ma_info elder">
+				<dt><span>선배에게 듣는 회사, 직무이야기</span></dt>
+				<dd>
+					동문특강(E-Class)<br><span><img src="images/elder_txt.png" alt="언니들이 돌아왔다."></span>
+					<a href="javascript:" class="btn apply" onclick="fn_lcture_apply2();">VOD 보러가기</a>
+				</dd>
+				<dd></dd>
+			</dl>
+		</li>
+	</ul>
+</div>
+
+
+
+<div class="mentor_area" id="mentor_area_5" style="display:none;">
+	<h5 class="tit">현직자 특강 & 상담</h5>
+	<ul>
+		
+
+		<li>
+			<dl class="ma_info">
+				<dt><span>前)국민건강보험공단(공기업)</span></dt>
+				<dd style="display:none;">前)국민건강보험공단</dd>
+				<dd>
+					<span>기업설명회<br>13:00~15:00</span>
+					
+					<!-- 신청기간 종료시 -->
+					
+					<a href="javascript:" class="btn deadline">신청종료</a>
+
+					<!-- 개인로그인 안했을시 -->
+					
+				</dd>
+
+				<dd>
+					<div class="ma_logo">
+						<div class="logo_box">
+							<div class="logo">
+								<img src="files/mentor/202011/2020110414082506306.JPG">
+							</div>
+						</div>
+					</div>
+				</dd>
+
+			</dl>
+		</li>
+		
+
+		<li>
+			<dl class="ma_info">
+				<dt><span>스포츠토토코리아(전략) 동문</span></dt>
+				<dd style="display:none;">스포츠토토코리아</dd>
+				<dd>
+					<span>동문설명회<br>15:00~17:00</span>
+					
+					<!-- 신청기간 종료시 -->
+					
+					<a href="javascript:" class="btn deadline">신청종료</a>
+
+					<!-- 개인로그인 안했을시 -->
+					
+				</dd>
+
+				<dd>
+					<div class="ma_logo">
+						<div class="logo_box">
+							<div class="logo">
+								<img src="files/mentor/202011/2020110414131302929.JPG">
+							</div>
+						</div>
+					</div>
+				</dd>
+
+			</dl>
+		</li>
+		
+		<li>
+			<dl class="ma_info elder">
+				<dt><span>선배에게 듣는 회사, 직무이야기</span></dt>
+				<dd>
+					동문특강(E-Class)<br><span><img src="images/elder_txt.png" alt="언니들이 돌아왔다."></span>
+					<a href="javascript:" class="btn apply" onclick="fn_lcture_apply2();">VOD 보러가기</a>
+				</dd>
+				<dd></dd>
+			</dl>
+		</li>
+	</ul>
+</div>
+
+
+
+		</div><!-- .content -->
+		</div>
+	</div><!-- .content -->
+
+
+</div>
+<!-- //본문 -->
+
+<!-- 하단 -->
+<div id="footer">
+	<div class="footer_area">
+		<div class="footer_info">
+			<address>서울시 구로구 디지털로 32가길 16, 4층, 13층(구로동, 파트너스타워2차)</address>	
+			<p>대표이사 : 강석린, 사업자 등록번호 : 220-86-73547</p>
+			<p>&#169; Copyright (c) CareerNet Co.,LTD. All Rights Reserved.</p>
+		</div>
+	</div><!-- .inner-wrap -->
+</div>
+<!-- //하단 --><div class="pop_up" id="pop1">
+	<div class="pop">
+		<div class="pop_wrap">
+			<div class="pop_head">
+				<h3>공지사항</h3>
+			</div>
+			<div id="pop_area_board">
+
+			</div>
+			<a href="#none" class="pop_close">닫기</a>
+		</div><!--.popWrap-->
+	</div><!--.pop-->
+	<span class="dim close"></span>
+</div>
+
+<div class="pop_up" id="pop2">
+	<div class="pop">
+		<div class="pop_wrap">
+			<div class="pop_head">
+				<h3>공지사항</h3>
+			</div>
+			<div class="pop_body">
+				<div class="tb_area">
+					<table class="tb">
+						<colgroup>
+							<col style="width:20%">
+							<col style="width:30%">
+							<col style="width:20%">
+							<col>
+						</colgroup>
+						<tbody>
+							<tr>
+								<th>제목</th>
+								<td colspan="3">[안내] 화상 멘토링 사용자 (구직자) 매뉴얼</td>
+							</tr>
+							<tr>
+								<th>작성자</th>
+								<td>홍길동</td>
+								<th>작성일</th>
+								<td>2020-04-20</td>
+							</tr>
+							<tr>
+								<td colspan="4">
+									<div class="txt_view">
+										<p>
+											박람회 사이트가 오픈되었습니다.<br>
+											박람회 사이트가 오픈되었습니다.<br>
+											박람회 사이트가 오픈되었습니다.<br>
+											박람회 사이트가 오픈되었습니다.<br>
+											박람회 사이트가 오픈되었습니다.<br>
+											박람회 사이트가 오픈되었습니다.<br>
+											박람회 사이트가 오픈되었습니다.<br>
+											박람회 사이트가 오픈되었습니다.<br>
+											박람회 사이트가 오픈되었습니다.<br>
+											박람회 사이트가 오픈되었습니다.<br>
+											박람회 사이트가 오픈되었습니다.<br>
+											박람회 사이트가 오픈되었습니다.
+										</p>
+									</div>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+			<div class="pop_footer">
+				<div class="btn_area">
+					<button type="button" class="btn gray close">목록</button>
+				</div>
+			</div>
+			<a href="#none" class="pop_close">닫기</a>
+		</div><!--.popWrap-->
+	</div><!--.pop-->
+	<span class="dim close"></span>
+</div>
+
+<!--
+<div class="pop_up" id="pop3">
+	<div class="pop">
+		<div class="pop_wrap">
+			<div class="pop_head">
+				<h3>직무상담 신청</h3>
+			</div>
+			<div class="pop_body" id="pop_area_apply">
+
+			</div>
+			<a href="#none" class="pop_close">닫기</a>
+		</div>
+	</div>
+	<span class="dim close"></span>
+</div>
+-->
+
+<!-- 직무상담 신청 -->
+<div class="pop_up" id="pop3">
+	<div class="pop">
+		<div class="pop_wrap">
+			<div class="pop_head">
+				<h3>직무상담 신청</h3>
+			</div>
+
+			<div id="pop_area_apply">
+				<div class="pop_body">
+					<div class="info_box">
+						<div class="step_area">
+							<ul>
+								<li class="on">Step1. 직무상담 시간선택</li>
+								<li>Step2. 사전질문 등록</li>
+								<li>Step3. 신청완료</li>
+							</ul>
+						</div>
+
+						<dl class="ib_dl">
+							<dt>
+								<span>MD</span>
+							</dt>
+							<dd class="logo">
+								<div class="logo_box">
+									<img src="">
+								</div>
+							</dd>
+						</dl>
+
+						<div class="time_area">
+							<h5>시간선택</h5>
+							<ul>
+								
+							</ul>
+						</div>
+					</div>
+				</div>
+				<div class="pop_footer">
+					<div class="btn_area">
+						<button type="button" class="btn blue close" onclick="view_layer('4');">사전질문 등록하러 가기</button>
+					</div>
+					<p class="footer_txt">
+						* 한 직무당 하나의 상담시간만 신청할 수 있습니다.<br>
+						* 시간 선택 후 사전질문을 등록해 주세요.	
+					</p>
+				</div>
+			</div>
+
+			<a href="#none" class="pop_close">닫기</a>
+		</div><!--.popWrap-->
+	</div><!--.pop-->
+	<span class="dim close"></span>
+</div>
+
+<!-- 사전질문 등록 -->
+<div class="pop_up" id="pop4">
+	<div class="pop">
+		<div class="pop_wrap">
+			<div class="pop_head">
+				<h3>현직자 특강&상담 신청</h3>
+			</div>
+			<div id="pop_area_question">
+			
+			</div>
+			<a href="javascript:location.href=location.href;" class="pop_close">닫기</a>
+		</div><!--.popWrap-->
+	</div><!--.pop-->
+	<span class="dim close"></span>
+</div>
+
+
+<div class="pop_up" id="pop4_2">
+	<div class="pop">
+		<div class="pop_wrap">
+			<div class="pop_head">
+				<h3>현직자 특강&상담 신청</h3>
+			</div>
+			<div id="pop_area_question_list">
+			
+			</div>
+			<a href="javascript:location.href=location.href;" class="pop_close">닫기</a>
+		</div><!--.popWrap-->
+	</div><!--.pop-->
+	<span class="dim close"></span>
+</div>
+
+
+<!-- 신청완료 결과 -->
+<div class="pop_up" id="pop5">
+	<div class="pop">
+		<div class="pop_wrap">
+			<div class="pop_head">
+				<h3>현직자 특강&상담 신청</h3>
+			</div>
+			<div id="pop_area_apply_result">
+
+				<div class="pop_body">
+					<div class="info_box">
+						<div class="step_area">
+							<ul>
+								<li>Step1. 직무상담 시간선택</li>
+								<li>Step2. 사전질문 등록</li>
+								<li class="on">Step3. 신청완료</li>
+							</ul>
+						</div>
+						<dl class="ib_dl">
+							<dt>
+								<span>MD</span>
+							</dt>
+							<dd class="logo">
+								<div class="logo_box">
+									<img src="../images/info_logo1.jpg">
+								</div>
+							</dd>
+						</dl>
+						<div class="txt_area">
+							<p>
+								<strong>직무상담 신청이 완료되었습니다.</strong><br>
+								신청된 직무상담은 마이페이지에서 확인이 가능합니다.<br>
+								<span>10월26일   13:00 ~ 13:25</span>
+							</p>
+						</div>
+
+						<script>
+						$(".btn_box .btn").click(function() {
+							$(this).hide(); 
+							$(this).siblings(".btn").show();
+							$(".info_box .tab").hide();
+							var activeTab = $(this).attr("href");
+							$(activeTab).show();
+							return false;
+						});
+						</script>
+					</div>
+				</div>
+				<div class="pop_footer">
+					<div class="btn_area">
+						<button type="button" class="btn blue">직무상담 신청내역 확인</button>
+						<button type="button" class="btn glay close">메인 페이지 이동</button>
+					</div>
+				</div>
+
+
+			</div>
+			<a href="javascript:location.href=location.href;" class="pop_close">닫기</a>
+		</div><!--.popWrap-->
+	</div><!--.pop-->
+	<span class="dim close"></span>
+</div>
+
+
+<div class="pop_up" id="pop98">
+	<div class="pop">
+		<div class="pop_wrap">
+			<div class="pop_head">
+					<h3>유의사항</h3>
+				</div>
+				<div class="pop_body">
+					<p class="notice">
+						동 행사에 참여한 주요기업은 보훈가족의 취업에 도움을 드리기 위해 
+						어려운 환경에서도 무료 봉사로 참여해 주시는 점을 감안하여 다음사항을 꼭 지켜 주시길 당부드립니다.
+						<br><br>
+						- 희망하시는 기업 설명회 및 강의장을 참석할 때 입장시간 지키기<br>
+						* 온라인 멘토링 신청은 횟수 제한없이 원하는 기업 및 시간에 모두 가능 <br>
+						- 동 직무 설명회는 대외 비공개 사항으로 촬영 및 녹취 금지<br>
+						* 정보통신망 이용촉진 및 정보보호 등에 관한 법률에 의거 제한됨을 유의<br>
+						- 직무 설명회의 원활한 진행을 위하여 기업 및 직무관련 문의사항은 가급적 사전질문으로 등록하기<br>
+						- 실시간 질의응답 등에 참여한 경우 바른 말 고운 말 사용하기(경어 사용)<br><br>
+					</p>
+					<label class="checkbox off" for="agree_chk">
+						<input class="chk" id="agree_chk" name="agree_chk" type="checkbox" value="1">
+						<span>유의사항을 모두 읽었으며, 직무설명회 참여를 신청하겠습니다.</span>
+					</label>
+				</div>
+				<div class="pop_footer">
+					<div class="btn_area">
+						<a href="javascript:void(0)" onclick="fn_apply();" class="btn blue">확인</a>
+					</div>
+				</div>
+				<a href="#none" class="pop_close">닫기</a>
+		</div><!--.popWrap-->
+	</div><!--.pop-->
+	<span class="dim close"></span>
+</div>
+
+<div class="pop_up" id="pop99">
+	<div class="pop">
+		<div class="pop_wrap">
+			<div class="pop_head">
+					<h3>유의사항</h3>
+				</div>
+				<div class="pop_body">
+					<p class="notice">
+						동 행사에 참여한 주요기업은 보훈가족의 취업에 도움을 드리기 위해 
+						어려운 환경에서도 무료 봉사로 참여해 주시는 점을 감안하여 다음사항을 꼭 지켜 주시길 당부드립니다.
+						<br><br>
+						- 희망하시는 기업 설명회 및 강의장을 참석할 때 입장시간 지키기<br>
+						* 온라인 멘토링 신청은 횟수 제한없이 원하는 기업 및 시간에 모두 가능 <br>
+						- 동 직무 설명회는 대외 비공개 사항으로 촬영 및 녹취 금지<br>
+						* 정보통신망 이용촉진 및 정보보호 등에 관한 법률에 의거 제한됨을 유의<br>
+						- 직무 설명회의 원활한 진행을 위하여 기업 및 직무관련 문의사항은 가급적 사전질문으로 등록하기<br>
+						- 실시간 질의응답 등에 참여한 경우 바른 말 고운 말 사용하기(경어 사용)<br><br>
+					</p>
+					<label class="checkbox off" for="agree_chk2">
+						<input class="chk" id="agree_chk2" name="agree_chk2" type="checkbox" value="1">
+						<span>유의사항을 모두 읽었으며, 직무설명회에 참여하겠습니다.</span>
+					</label>
+				</div>
+				<div class="pop_footer">
+					<div class="btn_area">
+						<a href="javascript:" onclick="fn_note_info_view_pop_apply()" class="btn blue">확인</a>
+					</div>
+				</div>
+				<a href="#none" class="pop_close">닫기</a>
+		</div><!--.popWrap-->
+	</div><!--.pop-->
+	<span class="dim close"></span>
+</div>
+
+
+<script language="Javascript">
+function setCookie( name, value, expiredays ) {
+    var todayDate = new Date();
+        todayDate.setDate( todayDate.getDate() + expiredays );
+        document.cookie = name + "=" + escape( value ) + "; path=/; expires=" + todayDate.toGMTString() + ";"
+}
+
+function closeWin(div, chk, cookname) {
+    if ( document.getElementById(chk).checked ){
+        setCookie(cookname, "done", 1);
+    }
+    document.getElementById(div).style.visibility = "hidden";
+}
+
+window.onload = function() {
+	document.getElementById('pop').style.visibility = "visible";
+   cookiedata = document.cookie; 
+   /* popup1 */
+   if ( cookiedata.indexOf("maindiv=done") < 0 ){   
+     document.getElementById('pop').style.visibility = "visible";
+   } else {
+     document.getElementById('pop').style.visibility = "hidden";
+   }
+
+   /* popup2 */
+   if ( cookiedata.indexOf("maindiv2=done") < 0 ){   
+     document.getElementById('pop2').style.visibility = "visible";
+   } else {
+     document.getElementById('pop2').style.visibility = "hidden";
+   }
+}
+//-->
+</script>
+<div id="pop" class="pop">
+	<div class="pop_wrap">
+		<div class="pop_head"></div>
+		<div class="pop_con">
+			<img src="images/pop_img.png" alt="" style="width:800px;">
+		</div>
+		<div class="pop_footer">
+			 <input type="checkbox" id="chkbox" value="checkbox"><label for="chkbox">오늘 하루 이 창을 열지 않음</label>
+			<a href="javascript:closeWin('pop', 'chkbox', 'maindiv');"><b>[닫기]</b></a>
+		</div>
+	</div>
+</div>
+
+</body>
+</html>
